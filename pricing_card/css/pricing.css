@@ -1,0 +1,116 @@
+:root {
+  --primary-color: #0284c7;
+  --primary-hover: #0369a1;
+  --bg-color: #f8fafc;
+  --card-bg: #ffffff;
+  --text-color: #1e293b;
+  --border-color: #cbd5e1;
+  --border-radius: 8px;
+  --spacing-base: 1rem;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  padding: var(--spacing-base);
+}
+
+.container {
+  max-width: 100%;
+  margin: 0 auto var(--spacing-base) auto;
+}
+
+header.container {
+  text-align: center;
+  margin-bottom: var(--spacing-base);
+}
+
+header h1 {
+  font-size: 1.75rem;
+}
+
+nav.container {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-base);
+}
+
+.nav-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.5rem var(--spacing-base);
+  border-radius: 4px;
+  transition: background-color 0.2s ease, outline 0.2s ease;
+}
+
+.nav-link:hover {
+  background-color: #e0f2fe;
+}
+
+.nav-link:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: calc(var(--spacing-base) * 1.5);
+  margin-bottom: var(--spacing-base);
+}
+
+.card h2 {
+  font-size: 1.25rem;
+  margin-bottom: var(--spacing-base);
+}
+
+.card img {
+  max-width: 150px;
+  height: auto;
+  border-radius: 50%;
+  display: block;
+  margin-bottom: var(--spacing-base);
+}
+
+.card p {
+  margin-bottom: var(--spacing-base);
+}
+
+.card ul {
+  padding-left: calc(var(--spacing-base) * 1.5);
+}
+
+.button {
+  display: inline-block;
+  padding: 0.5rem var(--spacing-base);
+  background-color: var(--primary-color);
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background-color 0.2s ease, outline 0.2s ease;
+}
+
+.button:hover {
+  background-color: var(--primary-hover);
+}
+
+.button:focus-visible {
+  outline: 3px solid #38bdf8;
+  outline-offset: 2px;
+}
+
+footer.container {
+  text-align: center;
+  font-size: 0.875rem;
+}
