@@ -189,6 +189,7 @@ section h2 {
 }
 
 .lokasi-map iframe {
+  width: 100%;
   border: 0;
 }
 
