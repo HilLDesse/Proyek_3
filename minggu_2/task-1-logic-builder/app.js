@@ -16,7 +16,7 @@ function tentukanKategori(nilai) {
   }
   if (nilai >= 60) {
     return 'C';
-  }
+     }
   return 'D';
 }
 
@@ -45,7 +45,7 @@ const kasusUji = [
   { nama: 'Hana', nilai: 84 },
   { nama: 'Fani', nilai: 85 },
   { nama: 'Gilang', nilai: 101 },
-  { nama: 'Indra', nilai: -1 }
+  { nama: 'Indra', nilai: "80" }
 ];
 
 const hasilUji = kasusUji.map(({ nama, nilai }) =>
