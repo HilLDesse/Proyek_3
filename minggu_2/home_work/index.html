@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Profile Card</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <button id="themeToggleBtn" class="btn btn-secondary" type="button">Ganti Tema</button>
+    </header>
+
+    <main class="card" id="profileCard">
+
+      <div id="loadingState" class="state-container">
+        <div class="spinner"></div>
+        <p>Memuat data profil...</p>
+      </div>
+
+      <div id="errorState" class="state-container hidden">
+        <p id="errorMessage" class="error-text">Gagal memuat data profil.</p>
+        <button id="retryBtn" class="btn btn-primary" type="button">Coba Lagi</button>
+      </div>
+
+      <div id="emptyState" class="state-container hidden">
+        <p class="empty-text">Data profil tidak ditemukan atau kosong.</p>
+      </div>
+
+      <div id="contentState" class="card-body hidden">
+        <div class="profile-header">
+          <h1 id="profileName" class="profile-name"></h1>
+          <p id="profileRole" class="profile-role"></p>
+        </div>
+
+        <button id="toggleDetailBtn" class="btn btn-outline" type="button" aria-expanded="false" aria-controls="profileDetails">
+          Tampilkan Detail
+        </button>
+
+        <div id="profileDetails" class="profile-details hidden">
+          <p><strong>Bio:</strong> <span id="profileBio"></span></p>
+          <p><strong>Lokasi:</strong> <span id="profileLocation"></span></p>
+        </div>
+
+        <hr class="divider">
+
+        <section class="skills-section">
+          <h2>Keterampilan</h2>
+          
+          <form id="addSkillForm" class="skill-form" novalidate>
+            <div class="input-group">
+              <input type="text" id="skillInput" placeholder="Tambah keterampilan baru..." aria-label="Tambah keterampilan">
+              <button type="submit" id="addSkillBtn" class="btn btn-primary">Tambah</button>
+            </div>
+            <p id="formFeedback" class="feedback-message hidden" aria-live="polite"></p>
+          </form>
+
+          <p id="emptySkillsMessage" class="empty-text hidden">Belum ada keterampilan yang ditambahkan.</p>
+          <ul id="skillsList" class="skills-list"></ul>
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
