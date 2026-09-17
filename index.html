@@ -6,21 +6,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kopi Teman Tugas - Kedai Kopi & Space Nugas</title>
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
 </head>
-
 <body>
 
   <header>
-    <nav class="container">
+    <nav class="container navbar">
       <a href="#" class="logo">
         <img src="assets/logokopi.png" alt="Logo Kopi Teman Tugas">
       </a>
-      <ul class="nav-menu">
+
+      <button id="hamburger-btn" class="hamburger-btn" type="button" aria-expanded="false" aria-label="Buka menu navigasi">
+      ☰ Menu
+      </button>
+
+      <ul id="nav-menu" class="nav-menu">
         <li><a href="#fasilitas">Fasilitas</a></li>
         <li><a href="#menu">Menu</a></li>
+        <li><a href="#faq">FAQ</a></li>
         <li><a href="#lokasi">Lokasi</a></li>
+        <li><a href="#menu" class="btn-cta">Pesan</a></li>
+        <li><button id="theme-toggle" class="btn-theme" type="button" aria-pressed="false">Mode Gelap</button></li>
       </ul>
-      <a href="#menu" class="btn-cta">Pesan</a>
     </nav>
   </header>
 
@@ -40,50 +47,60 @@
 
     <section id="fasilitas" class="container">
       <h2>Fasilitas Unggulan</h2>
-      <div class="card-grid">
-        <article class="card">
-          <img src="assets/wifi.jpg" alt="Ikon Wi-Fi Kencang" class="card-icon">
-          <h3>Wi-Fi 100 Mbps</h3>
-          <p>Koneksi stabil dan cepat untuk zoom meeting atau unduh materi kuliah.</p>
-        </article>
-
-        <article class="card">
-          <img src="assets/stopkontak.jpg" alt="Ikon Stopkontak Meja" class="card-icon">
-          <h3>Stop kontak Tiap Meja</h3>
-          <p>Bebas khawatir baterai laptop habis saat nugas seharian.</p>
-        </article>
-
-        <article class="card">
-          <img src="assets/budget.jpg" alt="Ikon Harga Ramah Kantong" class="card-icon">
-          <h3>Harga Student-Friendly</h3>
-          <p>Menu kopi dan camilan lezat dengan harga ramah kantong mahasiswa.</p>
-        </article>
+      <div id="daftar-fasilitas" class="card-grid">
+       
       </div>
     </section>
 
     <section id="menu" class="container">
       <h2>Menu Best Seller</h2>
-      <div class="card-grid">
-        <article class="card-menu">
-          <img src="assets/kopsu.jpg" alt="Kopi Susu Nugas">
-          <h3>Kopi Susu Nugas</h3>
-          <p>Rp 12.000</p>
-        </article>
-        <article class="card-menu">
-          <img src="assets/coffelatte.jpg" alt="Coffee Latte">
-          <h3>Coffee Latte</h3>
-          <p>Rp 12.000</p>
-        </article>
-        <article class="card-menu">
-          <img src="assets/matchalatte.jpg" alt="Matcha Latte">
-          <h3>Matcha Latte</h3>
-          <p>Rp 15.000</p>
-        </article>
-        <article class="card-menu">
-          <img src="assets/milk.jpg" alt="Milk Shake">
-          <h3>Milk Shake</h3>
-          <p>Rp 15.000</p>
-        </article>
+      <div id="filter-container" class="filter-container">
+        <button type="button" class="btn-filter active" data-category="semua">Semua</button>
+        <button type="button" class="btn-filter" data-category="kopi">Kopi</button>
+        <button type="button" class="btn-filter" data-category="non-kopi">Non-Kopi</button>
+        <button type="button" class="btn-filter" data-category="makanan">Makanan</button>
+      </div>
+      <div id="daftar-menu" class="card-grid">
+       
+      </div>
+      <p id="pesan-menu-kosong" class="empty-message hidden" role="status" aria-live="polite">Menu pada kategori ini belum tersedia.</p>
+    </section>
+
+    <section id="faq" class="container">
+      <h2>Pertanyaan Umum (FAQ)</h2>
+      <div id="faq-container" class="faq-container">
+
+      </div>
+    </section>
+
+    <section id="kontak" class="container">
+      <h2>Reservasi & Kontak Kami</h2>
+      <div class="form-wrapper">
+        <form id="form-kontak" novalidate>
+          <div class="form-group">
+            <label for="nama">Nama Lengkap</label>
+            <input type="text" id="nama" name="nama" placeholder="Ketik nama kamu" required>
+            <small id="error-nama" class="error-text" aria-live="polite"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Alamat Email</label>
+            <input type="email" id="email" name="email" placeholder="contoh@email.com" required>
+            <small id="error-email" class="error-text" aria-live="polite"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="pesan">Pesan / Catatan Reservasi</label>
+            <textarea id="pesan" name="pesan" rows="4" placeholder="Tuliskan pesan kamu" required></textarea>
+            <small id="error-pesan" class="error-text" aria-live="polite"></small>
+          </div>
+
+          <button type="submit" class="btn-primary">Kirim Pesan</button>
+        </form>
+
+        <div id="ringkasan-pesan" class="ringkasan-box hidden" role="status" aria-live="polite">
+         
+        </div>
       </div>
     </section>
 
@@ -110,7 +127,7 @@
       <p>&copy; 2026 Kopi Teman Tugas.</p>
     </div>
   </footer>
-
+  <button id="back-to-top" class="back-to-top hidden" type="button" aria-label="Kembali ke atas">↑</button>
 </body>
 
 </html>

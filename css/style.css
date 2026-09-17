@@ -6,10 +6,24 @@
   --text-dark: #2c3e50;
   --bg-light: #f8f9fa;
   --white: #ffffff;
+  --card-bg: #ffffff;
+  --border-color: #e2e8f0;
+  --error-color: #dc2626;
 
   --font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
   --max-width: 1100px;
   --radius: 8px;
+}
+
+/* TEMA GELAP (DARK MODE) */
+body.dark-theme {
+  --primary: #d97706;
+  --primary-dark: #b45309;
+  --text-dark: #f3f4f6;
+  --bg-light: #111827;
+  --white: #1f2937;
+  --card-bg: #1f2937;
+  --border-color: #374151;
 }
 
 * {
@@ -27,6 +41,7 @@ body {
   color: var(--text-dark);
   background-color: var(--bg-light);
   line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 img {
@@ -45,7 +60,9 @@ ul {
 }
 
 a:focus-visible,
-button:focus-visible {
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
   outline: 3px solid var(--primary);
   outline-offset: 3px;
 }
@@ -57,13 +74,18 @@ button:focus-visible {
   padding: 1.5rem 0;
 }
 
-/* --- HEADER & NAVBAR (Mobile First) --- */
+.hidden {
+  display: none !important;
+}
+
+/* --- HEADER & NAVBAR --- */
 header {
-  background-color: var(--white);
+  background-color: var(--card-bg);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 100;
+  transition: background-color 0.3s ease;
 }
 
 header .container {
@@ -73,7 +95,6 @@ header .container {
 nav {
   display: flex;
   flex-direction: column;
-  /* Menumpuk vertikal di layar kecil */
   align-items: center;
   gap: 1rem;
 }
@@ -84,14 +105,28 @@ nav {
   display: block;
 }
 
+.hamburger-btn {
+  display: block;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  color: var(--text-dark);
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 44px;
+}
+
 .nav-menu {
-  display: flex;
-  flex-wrap: wrap;
-  /* Menjaga teks menu tetap rapi jika layar sangat sempit */
-  justify-content: center;
+  display: none;
+  flex-direction: column;
   align-items: center;
-  gap: 0.75rem 1.25rem;
-  /* Gap lebih kecil untuk layar HP */
+  gap: 1rem;
+  width: 100%;
+}
+
+.nav-menu.active {
+  display: flex;
 }
 
 .nav-menu a {
@@ -109,18 +144,32 @@ nav {
 .btn-cta,
 .btn-primary {
   background-color: var(--primary);
-  color: var(--white);
+  color: #ffffff;
   padding: 0.65rem 1.4rem;
   border-radius: var(--radius);
+  border: none;
   display: inline-block;
   font-weight: 600;
   font-size: 1rem;
   text-align: center;
+  cursor: pointer;
+  min-height: 44px;
 }
 
 .btn-cta:hover,
 .btn-primary:hover {
   background-color: var(--primary-dark);
+}
+
+.btn-theme {
+  background: transparent;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 600;
+  min-height: 44px;
 }
 
 /* --- HERO SECTION --- */
@@ -163,15 +212,18 @@ section h2 {
 
 .card,
 .card-menu {
-  background: var(--white);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   padding: 1.5rem;
   border-radius: var(--radius);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   flex: 1 1 250px;
+  max-width: 350px;
   text-align: center;
 }
 
-.card h3 {
+.card h3,
+.card-menu h3 {
   color: var(--primary);
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
@@ -192,14 +244,136 @@ section h2 {
   object-fit: cover;
 }
 
+/* --- FILTER MENU --- */
+.filter-container {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-filter {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-dark);
+  border-radius: var(--radius);
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.btn-filter.active {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+}
+
+.empty-message {
+  text-align: center;
+  color: var(--error-color);
+  margin-top: 1rem;
+}
+
+/* --- FAQ ACCORDION --- */
+.faq-container {
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.faq-item {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.faq-question {
+  width: 100%;
+  text-align: left;
+  padding: 1rem;
+  background: none;
+  border: none;
+  color: var(--text-dark);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 44px;
+}
+
+.faq-answer {
+  padding: 0 1rem 1rem 1rem;
+  display: none;
+}
+
+.faq-answer.open {
+  display: block;
+}
+
+/* --- FORM KONTAK --- */
+.form-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+}
+
+.form-group {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  background: var(--bg-light);
+  color: var(--text-dark);
+}
+
+.form-group input[aria-invalid="true"],
+.form-group textarea[aria-invalid="true"] {
+  border-color: var(--error-color);
+}
+
+.error-text {
+  color: var(--error-color);
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.ringkasan-box {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: var(--bg-light);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius);
+}
+
 /* --- LOKASI --- */
 .lokasi-wrapper {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  background: var(--white);
+  background: var(--card-bg);
   padding: 1.5rem;
   border-radius: var(--radius);
+  border: 1px solid var(--border-color);
 }
 
 .lokasi-map iframe {
@@ -207,11 +381,29 @@ section h2 {
   border: 0;
 }
 
+/* --- BACK TO TOP --- */
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #ffffff;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 99;
+}
+
 /* --- FOOTER --- */
 footer {
   background-color: var(--primary-dark);
-  color: var(--white);
+  color: #ffffff;
   text-align: center;
+  padding: 1.5rem 0;
   margin-top: 3rem;
 }
 
@@ -219,17 +411,22 @@ footer {
 @media (min-width: 768px) {
   nav {
     flex-direction: row;
-    /* Kembali berderet horizontal */
     justify-content: space-between;
+  }
+
+  .hamburger-btn {
+    display: none;
+  }
+
+  .nav-menu {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    gap: 2rem;
   }
 
   .logo img {
     height: 65px;
-  }
-
-  .nav-menu {
-    gap: 2rem;
-    /* Jarak menu kembali renggang */
   }
 
   #hero {
