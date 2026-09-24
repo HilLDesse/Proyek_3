@@ -41,9 +41,10 @@ class ActivityController extends Controller
     ) {
         $activity = $service->create($request->validated());
 
-        return redirect()
-            ->route('activities.show', $activity)
-            ->with('success', 'Activity berhasil ditambahkan.');
+        return $this->redirectToActivity(
+            $activity,
+            'Activity berhasil ditambahkan.'
+        );
     }
 
     public function show(Activity $activity)
@@ -69,9 +70,10 @@ class ActivityController extends Controller
                 ->withInput();
         }
 
-        return redirect()
-            ->route('activities.show', $activity)
-            ->with('success', 'Activity berhasil diperbarui.');
+        return $this->redirectToActivity(
+            $activity,
+            'Activity berhasil diperbarui.'
+        );
     }
 
     public function destroy(Activity $activity)
@@ -81,5 +83,14 @@ class ActivityController extends Controller
         return redirect()
             ->route('activities.index')
             ->with('success', 'Activity berhasil dihapus.');
+    }
+
+    private function redirectToActivity(
+        Activity $activity,
+        string $message
+    ) {
+        return redirect()
+            ->route('activities.show', $activity)
+            ->with('success', $message);
     }
 }
