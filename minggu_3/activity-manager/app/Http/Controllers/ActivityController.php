@@ -15,11 +15,19 @@ class ActivityController extends Controller
     {
         Log::info('ActivityController@index dipanggil');
 
+        $status = request('status');
+
+        $validStatuses = ['Planned', 'Ongoing', 'Done'];
+
         $activities = Activity::query()
+            ->when(
+                in_array($status, $validStatuses, true),
+                fn ($query) => $query->where('status', $status)
+            )
             ->orderBy('activity_date')
             ->get();
 
-        return view('activities.index', compact('activities'));
+        return view('activities.index', compact('activities', 'status'));
     }
 
     public function create()
