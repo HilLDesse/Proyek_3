@@ -20,6 +20,24 @@
 
     <hr>
 
+    <a href="{{ route('activities.edit', $activity) }}">
+    Edit
+    </a>
+
+    <br>
+    <br>
+    <form
+        action="{{ route('activities.destroy', $activity) }}"
+        method="POST"
+        onsubmit="return confirm('Yakin ingin menghapus activity ini?')"
+    >
+        @csrf
+        @method('DELETE')
+
+        <button type="submit">Hapus</button>
+    </form>
+
+    <br>
     <a href="{{ route('activities.index') }}">Kembali ke daftar</a>
 
 </body>

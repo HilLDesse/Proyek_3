@@ -7,6 +7,10 @@
 
     <h1>Daftar Activities</h1>
 
+    @if (session('success'))
+        <p>{{ session('success') }}</p>
+    @endif
+
     @forelse ($activities as $activity)
 
         <h2>{{ $activity->title }}</h2>
