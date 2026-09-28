@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class StoreActivityRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Determine if the user is authorized to make the request.
      */
     public function authorize(): bool
     {
@@ -23,10 +23,11 @@ class StoreActivityRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'category_id' => ['required', 'exists:categories,id'],
+            'code' => ['required', 'string', 'max:30', 'unique:activities,code'],
             'title' => ['required', 'string', 'min:5', 'max:100'],
             'description' => ['nullable', 'string'],
             'activity_date' => ['required', 'date'],
-            'category' => ['required', 'string', 'max:50'],
             'status' => ['required', 'in:Planned,Ongoing,Done'],
         ];
     }

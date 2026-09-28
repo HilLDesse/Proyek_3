@@ -14,7 +14,9 @@
         {{ \Carbon\Carbon::parse($activity->activity_date)->format('d M Y') }}
     </p>
 
-    <p>Kategori: {{ $activity->category }}</p>
+    <p>Kode: {{ $activity->code }}</p>
+
+    <p>Kategori: {{ $activity->category->name }}</p>
 
     <p>Status: {{ $activity->status }}</p>
 

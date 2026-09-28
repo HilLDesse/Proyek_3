@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
 use App\Models\Activity;
@@ -27,12 +28,19 @@ class ActivityController extends Controller
             ->orderBy('activity_date')
             ->get();
 
-        return view('activities.index', compact('activities', 'status'));
+        $categories = Category::orderBy('name')->get();
+
+        return view(
+            'activities.index',
+            compact('activities', 'status', 'categories')
+        );
     }
 
     public function create()
     {
-        return view('activities.create');
+        $categories = Category::orderBy('name')->get();
+
+        return view('activities.create', compact('categories'));
     }
 
     public function store(
@@ -54,7 +62,9 @@ class ActivityController extends Controller
 
     public function edit(Activity $activity)
     {
-        return view('activities.edit', compact('activity'));
+        $categories = Category::orderBy('name')->get();
+
+        return view('activities.edit', compact('activity', 'categories'));
     }
 
     public function update(

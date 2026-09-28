@@ -4,12 +4,15 @@
     <title>Daftar Activities</title>
 </head>
 <body>
+    @if (session('success'))
+    <p>{{ session('success') }}</p>
+    @endif
+
+    @if (session('error'))
+        <p>{{ session('error') }}</p>
+    @endif
 
     <h1>Daftar Activities</h1>
-
-    @if (session('success'))
-        <p>{{ session('success') }}</p>
-    @endif
 
     <form method="GET" action="{{ route('activities.index') }}">
         <label for="status">Filter Status:</label>
@@ -33,6 +36,28 @@
         <button type="submit">Filter</button>
     </form>
 
+    <h2>Daftar Kategori</h2>
+
+    @foreach ($categories as $category)
+        <div>
+            <span>{{ $category->name }}</span>
+
+            <form
+                action="{{ route('categories.destroy', $category) }}"
+                method="POST"
+                style="display: inline;"
+                onsubmit="return confirm('Yakin ingin menghapus kategori ini?')"
+            >
+                @csrf
+                @method('DELETE')
+
+                <button type="submit">Hapus Kategori</button>
+            </form>
+        </div>
+
+        <br>
+    @endforeach
+
     <hr>
 
     @forelse ($activities as $activity)
@@ -46,7 +71,9 @@
             {{ \Carbon\Carbon::parse($activity->activity_date)->format('d M Y') }}
         </p>
 
-        <p>Kategori: {{ $activity->category }}</p>
+        <p>Kode: {{ $activity->code }}</p>
+
+        <p>Kategori: {{ $activity->category->name }}</p>
 
         <p>Status: {{ $activity->status }}</p>
 
