@@ -67,15 +67,15 @@
 <br>
 
 <div>
-    <label for="activity_date">Tanggal</label>
+    <label for="start_at">Tanggal Mulai</label>
     <input
         type="date"
-        id="activity_date"
-        name="activity_date"
-        value="{{ old('activity_date', isset($activity) ? $activity->activity_date->format('Y-m-d') : '') }}"
+        id="start_at"
+        name="start_at"
+        value="{{ old('start_at', isset($activity) && $activity->start_at ? $activity->start_at->format('Y-m-d') : '') }}"
     >
 
-    @error('activity_date')
+    @error('start_at')
         <p>{{ $message }}</p>
     @enderror
 </div>
@@ -83,27 +83,49 @@
 <br>
 
 <div>
-    <label for="status">Status</label>
-    <select id="status" name="status">
-        <option value="">-- Pilih Status --</option>
+    <label for="end_at">Tanggal Selesai</label>
+    <input
+        type="date"
+        id="end_at"
+        name="end_at"
+        value="{{ old('end_at', isset($activity) && $activity->end_at ? $activity->end_at->format('Y-m-d') : '') }}"
+    >
 
-        <option value="Planned"
-            {{ old('status', $activity->status ?? '') == 'Planned' ? 'selected' : '' }}>
-            Planned
-        </option>
+    @error('end_at')
+        <p>{{ $message }}</p>
+    @enderror
+</div>
 
-        <option value="Ongoing"
-            {{ old('status', $activity->status ?? '') == 'Ongoing' ? 'selected' : '' }}>
-            Ongoing
-        </option>
+<br>
 
-        <option value="Done"
-            {{ old('status', $activity->status ?? '') == 'Done' ? 'selected' : '' }}>
-            Done
-        </option>
-    </select>
+<div>
+    <label for="location">Lokasi</label>
+    <input
+        type="text"
+        id="location"
+        name="location"
+        value="{{ old('location', $activity->location ?? '') }}"
+    >
 
-    @error('status')
+    @error('location')
+        <p>{{ $message }}</p>
+    @enderror
+</div>
+
+<br>
+
+<div>
+    <label for="capacity">Kapasitas</label>
+    <input
+        type="number"
+        id="capacity"
+        name="capacity"
+        min="1"
+        max="500"
+        value="{{ old('capacity', $activity->capacity ?? '') }}"
+    >
+
+    @error('capacity')
         <p>{{ $message }}</p>
     @enderror
 </div>

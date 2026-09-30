@@ -20,6 +20,28 @@
 
     <p>Status: {{ $activity->status }}</p>
 
+    @if ($activity->status === 'draft')
+        <form
+            action="{{ route('activities.publish', $activity) }}"
+            method="POST"
+        >
+            @csrf
+
+            <button type="submit">Publish</button>
+        </form>
+    @endif
+
+    @if ($activity->status === 'published')
+        <form
+            action="{{ route('activities.complete', $activity) }}"
+            method="POST"
+        >
+            @csrf
+
+            <button type="submit">Complete</button>
+        </form>
+    @endif
+
     <hr>
 
     <a href="{{ route('activities.edit', $activity) }}">

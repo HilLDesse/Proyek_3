@@ -16,23 +16,53 @@ class ActivityController extends Controller
     {
         Log::info('ActivityController@index dipanggil');
 
+        $search = request('search');
+        $categoryId = request('category_id');
         $status = request('status');
+        $sort = request('sort', 'newest');
 
-        $validStatuses = ['Planned', 'Ongoing', 'Done'];
+        $validStatuses = ['draft', 'published', 'completed'];
+        $validSorts = ['newest', 'oldest'];
 
         $activities = Activity::query()
+            ->with('category')
+            ->when(
+                $search,
+                fn ($query) => $query->where(function ($query) use ($search) {
+                    $query->where('code', 'like', "%{$search}%")
+                        ->orWhere('title', 'like', "%{$search}%");
+                })
+            )
+            ->when(
+                $categoryId,
+                fn ($query) => $query->where('category_id', $categoryId)
+            )
             ->when(
                 in_array($status, $validStatuses, true),
                 fn ($query) => $query->where('status', $status)
             )
-            ->orderBy('activity_date')
-            ->get();
+            ->when(
+                in_array($sort, $validSorts, true),
+                fn ($query) => $query->orderBy(
+                    'start_at',
+                    $sort === 'oldest' ? 'asc' : 'desc'
+                )
+            )
+            ->paginate(10)
+            ->withQueryString();
 
         $categories = Category::orderBy('name')->get();
 
         return view(
             'activities.index',
-            compact('activities', 'status', 'categories')
+            compact(
+                'activities',
+                'categories',
+                'search',
+                'categoryId',
+                'status',
+                'sort'
+            )
         );
     }
 
@@ -83,6 +113,40 @@ class ActivityController extends Controller
         return $this->redirectToActivity(
             $activity,
             'Activity berhasil diperbarui.'
+        );
+    }
+
+    public function publish(
+    Activity $activity,
+    ActivityService $service
+    ) {
+        try {
+            $service->publish($activity);
+        } catch (DomainException $exception) {
+            return back()
+                ->withErrors(['status' => $exception->getMessage()]);
+        }
+
+        return $this->redirectToActivity(
+            $activity,
+            'Activity berhasil dipublikasikan.'
+        );
+    }
+
+    public function complete(
+        Activity $activity,
+        ActivityService $service
+    ) {
+        try {
+            $service->complete($activity);
+        } catch (DomainException $exception) {
+            return back()
+                ->withErrors(['status' => $exception->getMessage()]);
+        }
+
+        return $this->redirectToActivity(
+            $activity,
+            'Activity berhasil diselesaikan.'
         );
     }
 

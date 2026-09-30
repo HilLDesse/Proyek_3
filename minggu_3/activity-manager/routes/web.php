@@ -9,5 +9,16 @@ Route::get('/', function () {
 });
 
 Route::resource('activities', ActivityController::class);
-Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])
-    ->name('categories.destroy');
+
+Route::post(
+    '/activities/{activity}/publish',
+    [ActivityController::class, 'publish']
+)->name('activities.publish');
+
+Route::post(
+    '/activities/{activity}/complete',
+    [ActivityController::class, 'complete']
+)->name('activities.complete');
+
+Route::delete('/categories/{category}', [CategoryController::class, 'destroy']
+)->name('categories.destroy');

@@ -4,8 +4,9 @@
     <title>Daftar Activities</title>
 </head>
 <body>
+
     @if (session('success'))
-    <p>{{ session('success') }}</p>
+        <p>{{ session('success') }}</p>
     @endif
 
     @if (session('error'))
@@ -15,26 +16,94 @@
     <h1>Daftar Activities</h1>
 
     <form method="GET" action="{{ route('activities.index') }}">
-        <label for="status">Filter Status:</label>
+        <div>
+            <label for="search">Search:</label>
+            <input
+                type="text"
+                id="search"
+                name="search"
+                value="{{ $search }}"
+                placeholder="Cari kode atau judul"
+            >
+        </div>
 
-        <select name="status" id="status">
-            <option value="">Semua</option>
+        <br>
 
-            <option value="Planned" {{ $status === 'Planned' ? 'selected' : '' }}>
-                Planned
-            </option>
+        <div>
+            <label for="category_id">Kategori:</label>
+            <select name="category_id" id="category_id">
+                <option value="">Semua Kategori</option>
 
-            <option value="Ongoing" {{ $status === 'Ongoing' ? 'selected' : '' }}>
-                Ongoing
-            </option>
+                @foreach ($categories as $category)
+                    <option
+                        value="{{ $category->id }}"
+                        {{ (string) $categoryId === (string) $category->id ? 'selected' : '' }}
+                    >
+                        {{ $category->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
 
-            <option value="Done" {{ $status === 'Done' ? 'selected' : '' }}>
-                Done
-            </option>
-        </select>
+        <br>
 
-        <button type="submit">Filter</button>
+        <div>
+            <label for="status">Status:</label>
+
+            <select name="status" id="status">
+                <option value="">Semua Status</option>
+
+                <option
+                    value="draft"
+                    {{ $status === 'draft' ? 'selected' : '' }}
+                >
+                    Draft
+                </option>
+
+                <option
+                    value="published"
+                    {{ $status === 'published' ? 'selected' : '' }}
+                >
+                    Published
+                </option>
+
+                <option
+                    value="completed"
+                    {{ $status === 'completed' ? 'selected' : '' }}
+                >
+                    Completed
+                </option>
+            </select>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="sort">Urutan:</label>
+
+            <select name="sort" id="sort">
+                <option
+                    value="newest"
+                    {{ $sort === 'newest' ? 'selected' : '' }}
+                >
+                    Terbaru
+                </option>
+
+                <option
+                    value="oldest"
+                    {{ $sort === 'oldest' ? 'selected' : '' }}
+                >
+                    Terlama
+                </option>
+            </select>
+        </div>
+
+        <br>
+
+        <button type="submit">Terapkan</button>
     </form>
+
+    <hr>
 
     <h2>Daftar Kategori</h2>
 
@@ -66,14 +135,23 @@
 
         <p>{{ $activity->description }}</p>
 
-        <p>
-            Tanggal:
-            {{ \Carbon\Carbon::parse($activity->activity_date)->format('d M Y') }}
-        </p>
-
         <p>Kode: {{ $activity->code }}</p>
 
         <p>Kategori: {{ $activity->category->name }}</p>
+
+        <p>
+            Mulai:
+            {{ $activity->start_at->format('d M Y') }}
+        </p>
+
+        <p>
+            Selesai:
+            {{ $activity->end_at->format('d M Y') }}
+        </p>
+
+        <p>Lokasi: {{ $activity->location }}</p>
+
+        <p>Kapasitas: {{ $activity->capacity }}</p>
 
         <p>Status: {{ $activity->status }}</p>
 
@@ -90,6 +168,8 @@
         <p>Belum ada kegiatan.</p>
 
     @endforelse
+
+    {{ $activities->links() }}
 
 </body>
 </html>
