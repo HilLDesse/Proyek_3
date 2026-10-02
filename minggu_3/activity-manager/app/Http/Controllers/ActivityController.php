@@ -159,6 +159,26 @@ class ActivityController extends Controller
             ->with('success', 'Activity berhasil dihapus.');
     }
 
+    public function trash()
+    {
+        $activities = Activity::onlyTrashed()
+            ->with('category')
+            ->latest('deleted_at')
+            ->paginate(10);
+
+        return view('activities.trash', compact('activities'));
+    }
+
+    public function restore($id)
+    {
+        $activity = Activity::onlyTrashed()->findOrFail($id);
+        $activity->restore();
+
+        return redirect()
+            ->route('activities.trash')
+            ->with('success', 'Activity berhasil dipulihkan.');
+    }
+
     private function redirectToActivity(
         Activity $activity,
         string $message

@@ -4,6 +4,16 @@ use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActivityController;
 
+// Trash dan restore
+Route::get('/activities/trash', [ActivityController::class, 'trash'])
+    ->name('activities.trash');
+
+Route::post('/activities/{id}/restore', [ActivityController::class, 'restore'])
+    ->name('activities.restore');
+
+// Resource CRUD
+Route::resource('activities', ActivityController::class);
+
 Route::get('/', function () {
     return view('welcome');
 });

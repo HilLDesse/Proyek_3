@@ -1,0 +1,6 @@
+projectKey=activity-manager
+serverUrl=http://localhost:9000
+serverVersion=26.9.0.129388
+dashboardUrl=http://localhost:9000/dashboard?id=activity-manager
+ceTaskId=e7a04d48-aac7-4e74-84c0-daf2b3417e84
+ceTaskUrl=http://localhost:9000/api/ce/task?id=e7a04d48-aac7-4e74-84c0-daf2b3417e84
