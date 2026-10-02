@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('registrations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('activity_id')->constrained();
+            $table->string('participant_name');
+            $table->string('email');
+            $table->timestamp('registered_at');
             $table->timestamps();
+
+            $table->unique(['activity_id', 'email']);
         });
     }
 
