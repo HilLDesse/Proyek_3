@@ -130,4 +130,19 @@
     @enderror
 </div>
 
+<div>
+    <label for="poster">Poster</label>
+
+    <input
+        type="file"
+        id="poster"
+        name="poster"
+        accept="image/*"
+    >
+
+    @error('poster')
+        <div>{{ $message }}</div>
+    @enderror
+</div>
+
 <br>

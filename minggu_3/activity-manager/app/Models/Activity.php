@@ -11,6 +11,7 @@ class Activity extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'poster_path',
         'category_id',
         'code',
         'title',
@@ -41,5 +42,5 @@ class Activity extends Model
     {
         return $this->hasMany(Registration::class);
     }
-    
+
 }

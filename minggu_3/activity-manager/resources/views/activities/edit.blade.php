@@ -7,11 +7,23 @@
 
     <h1>Edit Activity</h1>
 
-    <form action="{{ route('activities.update', $activity) }}" method="POST">
+    <form action="{{ route('activities.update', $activity) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
-        @include('activities._form')
+        @if ($activity->poster_path)
+            <div>
+                <p>Poster saat ini:</p>
+
+                <img
+                    src="{{ asset('storage/' . $activity->poster_path) }}"
+                    alt="Poster {{ $activity->title }}"
+                    style="max-width: 300px;"
+                >
+            </div>
+
+            <br>
+        @endif
 
         <button type="submit">Update</button>
     </form>

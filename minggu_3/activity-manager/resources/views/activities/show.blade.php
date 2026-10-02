@@ -42,6 +42,18 @@
         </form>
     @endif
 
+    @if ($activity->poster_path)
+        <div>
+            <p>Poster:</p>
+
+            <img
+                src="{{ asset('storage/' . $activity->poster_path) }}"
+                alt="Poster {{ $activity->title }}"
+                style="max-width: 400px;"
+            >
+        </div>
+    @endif
+
     <hr>
 
     <a href="{{ route('activities.edit', $activity) }}">

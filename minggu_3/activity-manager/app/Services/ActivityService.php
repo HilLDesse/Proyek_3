@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\Activity;
 use DomainException;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class ActivityService
 {
@@ -11,6 +13,11 @@ class ActivityService
     {
         $data['status'] = 'draft';
         $data['activity_date'] = $data['start_at'];
+
+        if (isset($data['poster'])) {
+            $data['poster_path'] = $this->storePoster($data['poster']);
+            unset($data['poster']);
+        }
 
         return Activity::create($data);
     }
@@ -30,7 +37,21 @@ class ActivityService
 
         $data['activity_date'] = $data['start_at'];
 
+        $oldPosterPath = $activity->poster_path;
+        $newPosterUploaded = false;
+
+        if (isset($data['poster'])) {
+            $data['poster_path'] = $this->storePoster($data['poster']);
+            unset($data['poster']);
+
+            $newPosterUploaded = true;
+        }
+
         $activity->update($data);
+
+        if ($newPosterUploaded && $oldPosterPath) {
+            Storage::disk('public')->delete($oldPosterPath);
+        }
 
         return $activity->refresh();
     }
@@ -75,5 +96,10 @@ class ActivityService
         $activity->save();
 
         return $activity->refresh();
+    }
+
+    private function storePoster(UploadedFile $poster): string
+    {
+        return $poster->store('posters', 'public');
     }
 }
