@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Pengaturan Tema</title>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 2rem;
+        }
+
+        body.gelap {
+            background: #222;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Pengaturan Tema</h1>
+
+    <p>
+        Pilihan tema akan tetap tersimpan setelah halaman
+        di-refresh atau browser ditutup.
+    </p>
+
+    <button id="btnTema">
+        Ganti Tema
+    </button>
+
+    <script>
+
+        // Ambil tema yang tersimpan
+        const tema = localStorage.getItem('tema');
+
+        // Terapkan tema saat halaman dibuka
+        if (tema === 'gelap') {
+            document.body.classList.add('gelap');
+        }
+
+        // Tombol mengganti tema
+        document.getElementById('btnTema').addEventListener('click', function () {
+
+            if (document.body.classList.contains('gelap')) {
+
+                document.body.classList.remove('gelap');
+
+                localStorage.setItem('tema', 'terang');
+
+            } else {
+
+                document.body.classList.add('gelap');
+
+                localStorage.setItem('tema', 'gelap');
+
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>

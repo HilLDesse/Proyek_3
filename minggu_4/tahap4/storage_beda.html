@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Local vs Session Storage</title>
+</head>
+
+<body>
+
+    <h1>Local vs Session Storage</h1>
+
+    <p id="hasil"></p>
+
+    <script>
+
+        localStorage.setItem(
+            'data_local',
+            'Saya bertahan setelah browser ditutup'
+        );
+
+        sessionStorage.setItem(
+            'data_session',
+            'Saya hilang saat tab ditutup'
+        );
+
+        const local = localStorage.getItem('data_local');
+        const session = sessionStorage.getItem('data_session');
+
+        document.getElementById('hasil').innerHTML =
+            `
+            <p>${local}</p>
+            <p>${session}</p>
+            `;
+
+    </script>
+
+</body>
+</html>

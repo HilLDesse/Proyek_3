@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Cek Storage</title>
+</head>
+
+<body>
+
+    <h1>Cek Local Storage dan Session Storage</h1>
+
+    <p id="local"></p>
+    <p id="session"></p>
+
+    <script>
+
+        const dataLocal = localStorage.getItem('data_local');
+        const dataSession = sessionStorage.getItem('data_session');
+
+        document.getElementById('local').textContent =
+            dataLocal ?? 'data_local tidak ditemukan';
+
+        document.getElementById('session').textContent =
+            dataSession ?? 'data_session tidak ditemukan';
+
+    </script>
+
+</body>
+</html>
